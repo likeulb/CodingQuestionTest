@@ -15,7 +15,6 @@ import java.util.*;
  */
 public class Solution {
 	
-	
 	HashSet<Integer> set = new HashSet<Integer>();
     public boolean isHappy(int n) {
         if(n==1) return true;
@@ -927,13 +926,110 @@ public class Solution {
                 return count;
             }
         
-
+            public boolean isAdditiveNumber(String num) {
+                if(num==null||num.length()<3) return false;
+                for(int i=1;i<=num.length()/2;i++){
+                    for(int j=1;i+j<=num.length();j++){
+                        if(check(i,j, num))
+                            return true;
+                    }
+                }
+                return false;
+            }
+            public boolean check(int i, int j, String num){
+                if(num.charAt(i)=='0'&&j>1) return false;
+                if(i+j==num.length()) return false;
+                String sum;
+                Long x1 = Long.parseLong(num.substring(0,i));
+                Long x2 = Long.parseLong(num.substring(i,i+j));
+                
+                for(int start = i+j; start!=num.length();start+=sum.length()){
+                    x2 = x2+x1;
+                    x1 = x2-x1;
+                    sum = x2.toString();
+                    if(!num.startsWith(sum, start)) return false;
+                }
+                return true;
+            }
+            
+            public String generate(int mask, String word){
+                StringBuilder sb = new StringBuilder();
+                int i=0;
+                while(i<word.length()){
+                    if((mask&(1<<i))==0){ //
+                        sb.append(word.charAt(i));
+                        i++;
+                    }
+                    else{
+                        int cur=i;
+                        while(cur<word.length()&&((mask&(1<<cur))>0)){
+                            cur++;
+                        }
+                        sb.append(cur-i);
+                        i=cur;
+                    }
+                }
+                return sb.toString();
+            }
+     
+            public String removeDuplicateLetters(String s) {
+                if(s==null||s.length()<=1) return s;
+                int[] count = new int[26];
+                for(int i=0;i<s.length();i++){
+                    count[s.charAt(i)-'a']++;
+                }
+                int min=0;
+                for(int i=0;i<s.length();i++){
+                    if(s.charAt(i)<s.charAt(min)){
+                        min=i;
+                    }
+                    count[s.charAt(i)-'a']--;
+                    if(count[s.charAt(i)-'a']==0) break;
+                }
+                return s.charAt(min)+removeDuplicateLetters(s.substring(min+1).replaceAll(""+s.charAt(min),""));
+            }
+        
+            public List<String> generateAbbreviations(String word) {
+                List<String> result=new ArrayList<>();
+                if(word==null||word.length()==0) return new ArrayList<String>();
+                helper(result, "",0,word,0);
+                return result;
+            }
+            public void helper(List<String> result, String cur, int index, String word, int count){
+                if(index==word.length()){
+                    if(count>0){
+                        cur+=count;
+                    }
+                    result.add(cur);
+                    return;
+                }
+                helper(result, cur+(count>0?count:"")+word.charAt(index),index+1,word,0);
+                helper(result,cur,index+1,word,count+1);
+            }
     
     public static void main(String[] args) {
+    	
     	int[] test2={-1,1,-1,-1};
     	Solution sol = new Solution();
+    	sol.generateAbbreviations("word");
+    	System.out.println((5)%(-3));
+    	System.out.println(sol.removeDuplicateLetters("bbcaac"));
+    	
+    	System.out.println(sol.generate(1, "word"));
+    	
+    	
+    	
+    	String[] board = {"..9748...","7........",".2.1.9...","..7...24.",".64.1.59.",".98...3..","...8.3.2.","........6","...2759.."};
+    	char[][] b = new char[9][9];
+    	int y=0;
+    	for(String s:board){
+    		b[y++]=s.toCharArray();
+    	}
+    	
+    	sol.isAdditiveNumber("111");
     	sol.threeSumSmaller(test2, -1);
     	double d = Solution.sqrt(45, 1);
+    	String[] words={"foo","bar"};
     	
     	System.out.println(d);
     	//fastPower(3,7,5);

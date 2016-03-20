@@ -8,7 +8,7 @@ public class TwitterOA {
 		List<Integer> result = new ArrayList<>();
 		int b = b0;
 		while(b<limit){
-			int cur = (b-a0)%d;
+			int cur = b-a0;
 			if(cur<0){
 				cur = (cur+d)%d;
 			}
@@ -21,6 +21,34 @@ public class TwitterOA {
 	}
 	//砍树
 	public List<Integer> cutTree(int[] height){
+		
+		List<Integer> result = new ArrayList<>();
+		int n=height.length;
+	
+		while(n>0){
+			int min=Integer.MAX_VALUE;
+		
+			for(int i:height){
+				if(i<=0) continue;
+				min=Math.min(min, i);
+			}
+			int k=0;
+			for(int i=0;i<height.length;i++){
+				if(height[i]>=min){
+					height[i]-=min;
+					k++;
+					if(height[i]<=0){
+						n--;
+					}
+				}
+			}
+			if(n==0) break;
+			result.add(k);
+		}
+		return result;
+		
+		
+		/*
 		PriorityQueue<Integer> que = new PriorityQueue<>();
 		List<Integer> result = new ArrayList<>();
 		List<Integer> tmp = new ArrayList<>();
@@ -41,7 +69,7 @@ public class TwitterOA {
 			que.addAll(tmp);
 			tmp.clear();
 		}
-		return result;
+		return result;*/
 	}
 	
 	//delete t from s and return how many times we can do this
@@ -426,9 +454,13 @@ public class TwitterOA {
 		return result;
 	}
 	public int gcd(int a, int b){
+		/*
 		if(a==b) return a;
 		if(a<b) return gcd(a,b-a);
-		else return gcd(a-b,b);
+		else return gcd(a-b,b);*/
+		if(b==0) return a;
+		if(a<b) return gcd(b,a);
+		return gcd(b,a-b);
 	}
 	public int lcm(int a, int b){
 		int g = gcd(a,b);
@@ -555,9 +587,25 @@ public class TwitterOA {
 		System.out.println(count);
 		return count;
 	}
+	public int smallestconversion(int n){
+		int count=0;
+		while(n>0){
+			if((n&1)==1){
+				n-=1;
+				
+			}
+			else{
+				n>>=1;
+			}
+			count++;
+		}
+		return count;
+	}
 	
 	public static void main(String[] args){
 		TwitterOA test = new TwitterOA();
+		System.out.println(test.gcd(20, 8));
+		System.out.println(test.smallestconversion(17));
 //		List<Integer> result=test.getSame(1, 3, 1, 2, 100);
 //		for(int a:result){
 //			System.out.println(a);
@@ -623,7 +671,7 @@ public class TwitterOA {
 		
 //		int[] a = {2,3,1,0};
 //		test.findSet(a);
-		test.numCubic(100000,100000);
+//		test.numCubic(100000,100000);
 		System.out.println(test.deleteString("bababbbab", "bab"));
 		System.out.println(test.deleteString("bbbabab", "bab"));
 		System.out.println(test.firstNonDuplicate("abcdedbacfacg"));

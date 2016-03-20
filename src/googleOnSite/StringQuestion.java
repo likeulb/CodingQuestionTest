@@ -91,6 +91,7 @@ public class StringQuestion {
 		StringQuestion test = new StringQuestion();
 		System.out.println(test.nthCharacter(30));
 		System.out.println(test.encode("ddd"));
+		System.out.println(test.encode("ffff665566g6666bb1aaaa"));
 		System.out.println(test.decode(test.encode("ffff665566g6666bb1aaaa")));
 	}
 

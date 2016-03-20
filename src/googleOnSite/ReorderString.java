@@ -63,6 +63,6 @@ public class ReorderString {
 	}
 	public static void main(String[] args){
 		ReorderString test = new ReorderString();
-		System.out.println(test.reorder("aaabb", 2));
+		System.out.println(test.reorder("aaabbbcccdd", 3));
 	}
 }

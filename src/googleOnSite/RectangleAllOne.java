@@ -46,7 +46,7 @@ public class RectangleAllOne {
 		}
 	}
 	public static void main(String[] args){
-		int[][] a = {{0,0,0},{0,0,0},{0,0,1}};
+		int[][] a = {{0,0,1},{0,0,1},{0,0,1}};
 		List<int[]> result= new ArrayList<>();
 		RectangleAllOne test = new RectangleAllOne();
 		result=test.rectangleAllOne(a);
